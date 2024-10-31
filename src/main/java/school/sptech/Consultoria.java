@@ -35,8 +35,8 @@ public class Consultoria {
         this.vagas = vagas;
     }
 
-    public Boolean contratar(Desenvolvedor desenvolvedor){
-        if(desenvolvedores.size() < vagas){
+    public Boolean contratar(Desenvolvedor desenvolvedor) {
+        if (desenvolvedores.size() < vagas) {
             desenvolvedores.add(desenvolvedor);
             return true;
         }
@@ -62,12 +62,12 @@ public class Consultoria {
         return salarioTotalConsultoria;
     }
 
-    public Integer qtdDesenvolvedoresMobile(){
+    public Integer qtdDesenvolvedoresMobile() {
         Integer qtdDevsMobile = 0;
 
         for (int i = 0; i < desenvolvedores.size(); i++) {
             Desenvolvedor devAtual = desenvolvedores.get(i);
-            if(devAtual instanceof DesenvolvedorMobile){
+            if (devAtual instanceof DesenvolvedorMobile) {
                 qtdDevsMobile++;
             }
         }
@@ -88,14 +88,14 @@ public class Consultoria {
     }
 
     public Desenvolvedor buscarMenorSalario() {
-        if(desenvolvedores.isEmpty()){
+        if (desenvolvedores.isEmpty()) {
             return null;
         }
 
         Desenvolvedor menorSalario = desenvolvedores.get(0);
         for (int i = 0; i < desenvolvedores.size(); i++) {
             Desenvolvedor desenvolvedorAtual = desenvolvedores.get(i);
-            if(desenvolvedorAtual.calcularSalario() < menorSalario.calcularSalario()){
+            if (desenvolvedorAtual.calcularSalario() < menorSalario.calcularSalario()) {
                 menorSalario = desenvolvedorAtual;
             }
         }
@@ -103,22 +103,22 @@ public class Consultoria {
         return menorSalario;
     }
 
-    public List<Desenvolvedor> buscarPorTecnologia(String tecnologia){
+    public List<Desenvolvedor> buscarPorTecnologia(String tecnologia) {
         List<Desenvolvedor> devPorTecnologia = new ArrayList<>();
 
-        for (int i = 0; i < desenvolvedores.size(); i++){
+        for (int i = 0; i < desenvolvedores.size(); i++) {
             Desenvolvedor desenvolvedorAtual = desenvolvedores.get(i);
-            if(desenvolvedorAtual instanceof DesenvolvedorMobile){
-                if(((DesenvolvedorMobile) desenvolvedorAtual).getLinguagem().equalsIgnoreCase(tecnologia) ||
-                    ((DesenvolvedorMobile) desenvolvedorAtual).getPlataforma().equalsIgnoreCase(tecnologia)){
+            if (desenvolvedorAtual instanceof DesenvolvedorMobile) {
+                if (((DesenvolvedorMobile) desenvolvedorAtual).getLinguagem().equalsIgnoreCase(tecnologia) ||
+                        ((DesenvolvedorMobile) desenvolvedorAtual).getPlataforma().equalsIgnoreCase(tecnologia)) {
                     devPorTecnologia.add(desenvolvedorAtual);
                 }
             }
 
-            if(desenvolvedorAtual instanceof  DesenvolvedorWeb){
-                if(((DesenvolvedorWeb) desenvolvedorAtual).getBackend().equalsIgnoreCase(tecnologia) ||
-                    ((DesenvolvedorWeb) desenvolvedorAtual).getFrontend().equalsIgnoreCase(tecnologia) ||
-                    ((DesenvolvedorWeb) desenvolvedorAtual).getSgbd().equalsIgnoreCase(tecnologia)){
+            if (desenvolvedorAtual instanceof DesenvolvedorWeb) {
+                if (((DesenvolvedorWeb) desenvolvedorAtual).getBackend().equalsIgnoreCase(tecnologia) ||
+                        ((DesenvolvedorWeb) desenvolvedorAtual).getFrontend().equalsIgnoreCase(tecnologia) ||
+                        ((DesenvolvedorWeb) desenvolvedorAtual).getSgbd().equalsIgnoreCase(tecnologia)) {
                     devPorTecnologia.add(desenvolvedorAtual);
                 }
             }
@@ -126,30 +126,31 @@ public class Consultoria {
 
         return devPorTecnologia;
     }
-/*
-    public Double getTotalSalariosPorTecnologia(String tecnologia){
-        List<Desenvolvedor> devSalarioTotal = new ArrayList<>();
 
-        for (int i = 0; i < desenvolvedores.size(); i++){
-            Desenvolvedor desenvolvedorAtual = desenvolvedores.get(i);
-            if(desenvolvedorAtual instanceof DesenvolvedorMobile){
-                if(((DesenvolvedorMobile) desenvolvedorAtual).getLinguagem().equalsIgnoreCase(tecnologia) ||
-                        ((DesenvolvedorMobile) desenvolvedorAtual).getPlataforma().equalsIgnoreCase(tecnologia)){
-                    devPorTecnologia.add(desenvolvedorAtual);
+    public Double getTotalSalariosPorTecnologia(String tecnologia) {
+        Double salarioTotal = 0.0;
+
+        for (Desenvolvedor desenvolvedor : desenvolvedores) {
+            if (desenvolvedor instanceof DesenvolvedorMobile) {
+                DesenvolvedorMobile devMobile = (DesenvolvedorMobile) desenvolvedor;
+
+                if (devMobile.getPlataforma().equalsIgnoreCase(tecnologia) ||
+                        devMobile.getLinguagem().equalsIgnoreCase(tecnologia)) {
+                    salarioTotal += devMobile.calcularSalario();
                 }
             }
 
-            if(desenvolvedorAtual instanceof  DesenvolvedorWeb){
-                if(((DesenvolvedorWeb) desenvolvedorAtual).getBackend().equalsIgnoreCase(tecnologia) ||
-                        ((DesenvolvedorWeb) desenvolvedorAtual).getFrontend().equalsIgnoreCase(tecnologia) ||
-                        ((DesenvolvedorWeb) desenvolvedorAtual).getSgbd().equalsIgnoreCase(tecnologia)){
-                    devPorTecnologia.add(desenvolvedorAtual);
+            if (desenvolvedor instanceof DesenvolvedorWeb) {
+                DesenvolvedorWeb devWeb = (DesenvolvedorWeb) desenvolvedor;
+
+                if (devWeb.getSgbd().equalsIgnoreCase(tecnologia) ||
+                        devWeb.getBackend().equalsIgnoreCase(tecnologia) ||
+                        devWeb.getFrontend().equalsIgnoreCase(tecnologia)) {
+                    salarioTotal += devWeb.calcularSalario();
                 }
             }
         }
+
+        return salarioTotal;
     }
-    
- */
-
-
 }
